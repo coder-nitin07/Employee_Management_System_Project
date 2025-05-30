@@ -1,0 +1,181 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+  <h2>Employee List</h2>
+
+  <!-- Search and Sort Controls -->
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search by name..." />
+    
+    <div>
+      Sort by: 
+      <select id="sortBySelect">
+        <option value="name" selected>Name</option>
+        <option value="designation">Designation</option>
+      </select>
+      <select id="sortOrderSelect">
+        <option value="asc" selected>Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Employee Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Designation</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="employeesBody">
+      <!-- Employees will be rendered here -->
+    </tbody>
+  </table>
+
+  <p id="error"></p>
+
+  <!-- Pagination Controls -->
+  <div class="pagination">
+    <button id="prevPage" disabled>Prev</button>
+    <span id="pageInfo"></span>
+    <button id="nextPage" disabled>Next</button>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+  // Initial state
+  let currentPage = 1;
+  const limit = 10;
+  let totalPages = 1;
+  let currentSearch = '';
+  let currentSortBy = 'name';
+  let currentSortOrder = 'asc';
+
+  function fetchEmployees() {
+    $('#error').text('');
+    $('#employeesBody').empty();
+
+    $.ajax({
+      url: `http://localhost:4000/api/getAllEmployee`,
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      data: {
+        page: currentPage,
+        limit,
+        search: currentSearch,
+        sortBy: currentSortBy,
+        sortOrder: currentSortOrder
+      },
+      success: function(response) {
+        totalPages = response.totalPages;
+        $('#pageInfo').text(`Page ${response.currentPage} of ${totalPages}`);
+
+        $('#prevPage').prop('disabled', currentPage <= 1);
+        $('#nextPage').prop('disabled', currentPage >= totalPages);
+
+        if (response.Employees && response.Employees.length > 0) {
+          response.Employees.forEach(function(emp) {
+            $('#employeesBody').append(`
+              <tr>
+                <td>${emp.name}</td>
+                <td>${emp.email}</td>
+                <td>${emp.designation}</td>
+                <td>
+                  <button class="edit-btn" data-id="${emp._id}">Edit</button>
+                  <button class="delete-btn" data-id="${emp._id}">Delete</button>
+                </td>
+              </tr>
+            `);
+          });
+        } else {
+          $('#employeesBody').append('<tr><td colspan="4" style="text-align:center;">No employees found.</td></tr>');
+        }
+      },
+      error: function(xhr) {
+        let msg = 'Error loading employees.';
+        if (xhr.responseJSON && xhr.responseJSON.message) {
+          msg += ' ' + xhr.responseJSON.message;
+        }
+        $('#error').text(msg);
+      }
+    });
+  }
+
+  // Fetch first page on load
+  fetchEmployees();
+
+  // Pagination buttons
+  $('#prevPage').click(function() {
+    if (currentPage > 1) {
+      currentPage--;
+      fetchEmployees();
+    }
+  });
+
+  $('#nextPage').click(function() {
+    if (currentPage < totalPages) {
+      currentPage++;
+      fetchEmployees();
+    }
+  });
+
+  // Search input debounce
+  let searchTimeout;
+  $('#searchInput').on('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      currentSearch = $('#searchInput').val().trim();
+      currentPage = 1; // reset to first page on search
+      fetchEmployees();
+    }, 500);
+  });
+
+  // Sorting controls
+  $('#sortBySelect, #sortOrderSelect').change(function() {
+    currentSortBy = $('#sortBySelect').val();
+    currentSortOrder = $('#sortOrderSelect').val();
+    currentPage = 1; // reset to first page on sort
+    fetchEmployees();
+  });
+
+  // Handle delete button click
+  $(document).on('click', '.delete-btn', function() {
+    const id = $(this).data('id');
+    if (confirm('Are you sure you want to delete this employee?')) {
+      $.ajax({
+        url: `http://localhost:4000/api/deleteEmployee/${id}`,
+        type: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function() {
+          alert('Employee deleted successfully.');
+          fetchEmployees(); // reload list after deletion without full page reload
+        },
+        error: function() {
+          alert('Failed to delete employee.');
+        }
+      });
+    }
+  });
+
+  // Handle edit button click
+  $(document).on('click', '.edit-btn', function() {
+    const id = $(this).data('id');
+    window.location.href = `/employees/edit/${id}`;
+  });
+
+  // Redirect to login if no token found
+  if (!localStorage.getItem('token')) {
+    window.location.href = '/login';
+  }
+});
+</script>
+
+<%- include('../partials/footer') %>

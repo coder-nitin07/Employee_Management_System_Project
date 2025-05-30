@@ -1,0 +1,53 @@
+
+<%- include('../partials/header') %>
+
+<div style="width: 300px; margin: 40px auto;">
+    <h2>Login</h2>
+
+    <form id="loginForm">
+        <label>Email</label>
+
+        <input type="email" name="email" required  />
+
+        <label for="">Password</label>
+
+        <input type="password" name="password" required  />
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="error"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+     $('#loginForm').on('submit', async function(e) {
+        e.preventDefault();
+
+        const email = $('input[name="email"]').val();
+        const password = $('input[name="password"]').val();
+
+        try {
+            const res = await fetch('http://localhost:4000/auth/loginUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                localStorage.setItem('token', data.token);
+                window.location.href = '/employees';
+            } else {
+                $('#error').text(data.message || 'Login failed');
+            }
+        } catch (err) {
+            $('#error').text('Something went wrong');
+        }
+    });
+</script>
+
+<%- include('../partials/footer') %>

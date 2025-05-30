@@ -1,0 +1,131 @@
+<%- include('../partials/header', { title: 'Edit Employee' }) %>
+
+<div style="width: 400px; margin: 40px auto;">
+    <h2>Edit Employee</h2>
+
+    <form id="editEmployeeForm" enctype="multipart/form-data">
+        <input type="hidden" id="employeeId" name="id" />
+
+        <label for="name">Name *</label><br />
+        <input type="text" id="name" name="name" required />
+        <br /><br />
+
+        <label for="email">Email *</label><br />
+        <input type="email" id="email" name="email" required />
+        <br /><br />
+
+        <label for="mobile">Mobile *</label><br />
+        <input type="text" id="mobile" name="mobile" maxlength="10" required />
+        <br /><br />
+
+        <label for="designation">Designation *</label><br />
+        <select id="designation" name="designation" required>
+            <option value="">Select Designation</option>
+            <option value="HR">HR</option>
+            <option value="Manager">Manager</option>
+            <option value="Sales">Sales</option>
+        </select>
+        <br /><br />
+
+        <label>Gender *</label><br />
+        <input type="radio" id="male" name="gender" value="male" required />
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female" required />
+        <label for="female">Female</label>
+        <br /><br />
+
+       <label>Course *</label><br />
+        <input type="radio" id="mca" name="course" value="MCA" required />
+        <label for="mca">MCA</label>
+        <input type="radio" id="bca" name="course" value="BCA" required />
+        <label for="bca">BCA</label>
+        <input type="radio" id="bsc" name="course" value="BSC" required />
+        <label for="bsc">BSC</label>
+        <br /><br />
+
+        <label for="image">Portfolio Image (upload to change)</label><br />
+        <input type="file" id="image" name="image" accept="image/*" />
+        <br /><br />
+
+        <button type="submit">Update Employee</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Extract employee ID from URL query param, e.g., /editEmployee?id=123
+        const pathParts = window.location.pathname.split('/');
+        const employeeId = pathParts[pathParts.length - 1];
+
+        if (!employeeId) {
+            alert('Invalid employee ID');
+            window.location.href = '/employees';
+            return;
+        }
+
+        // Fetch existing employee data
+        $.ajax({
+            url: `http://localhost:4000/api/getEmployee/${employeeId}`,
+            type: 'GET',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            success: function(response) {
+                const emp = response.employee;
+
+                $('#employeeId').val(emp._id);
+                $('#name').val(emp.name);
+                $('#email').val(emp.email);
+                $('#mobile').val(emp.mobile);
+                $('#designation').val(emp.designation);
+                $('input[name="gender"][value="' + emp.gender + '"]').prop('checked', true);
+                // For course checkbox, check matching boxes
+                const courses = Array.isArray(emp.course) ? emp.course : [emp.course];
+                $('input[name="course"]').each(function() {
+                    if (courses.includes($(this).val())) {
+                        $(this).prop('checked', true);
+                    }
+                });
+            },
+           error: function(xhr) {
+            if (xhr.status === 401) {
+                alert('Session expired or unauthorized. Please login again.');
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+                return;
+            }
+            const errorMessage = xhr.responseJSON?.message || 'Failed to update employee';
+            alert(errorMessage);
+            }
+        });
+
+        // Handle form submit to update employee
+        $('#editEmployeeForm').submit(function(e) {
+            e.preventDefault();
+
+            const form = $('#editEmployeeForm')[0];
+            const formData = new FormData(form);
+
+            $.ajax({
+                url: `http://localhost:4000/api/updateEmployee/${employeeId}`,
+                type: 'PUT',
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function() {
+                    alert('Employee updated successfully!');
+                    window.location.href = '/employees';
+                },
+                error: function(xhr) {
+                    const errorMessage = xhr.responseJSON?.message || 'Failed to update employee';
+                    alert(errorMessage);
+                }
+            });
+        });
+    });
+</script>
+
+<%- include('../partials/footer') %>
