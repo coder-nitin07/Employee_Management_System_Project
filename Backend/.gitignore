@@ -17,5 +17,4 @@ debug.log
 .DS_Store
 Thumbs.db
 
-# Uploaded images (optional if stored locally and not needed on GitHub)
-uploads/
+
