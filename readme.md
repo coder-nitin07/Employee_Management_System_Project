@@ -18,7 +18,6 @@ A full-stack app to manage employees with Node.js, Express, MongoDB, EJS, and jQ
 1. Clone repo:
     git clone: 
 
-
 ## Start the Project: 
 
 # Backend:
@@ -26,13 +25,15 @@ A full-stack app to manage employees with Node.js, Express, MongoDB, EJS, and jQ
 2. npm install
 3. npm start
 
-
+    Backend Deploy Link: https://employee-management-system-project-yaf9.onrender.com
 
 
 # Frontend:
 1. cd backend
 2. npm install
 3. npm start
+
+    Frontend Deploy Link: https://employee-management-system-project-1.onrender.com
 
 # Deployment:
     - Backend deployed on Render
