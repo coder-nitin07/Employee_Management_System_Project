@@ -61,19 +61,50 @@ main {
 /* footer css start */
 
 footer {
-  background-color: #007bff; /* Matching header color */
-  padding: 15px 0;
-  text-align: center;
-  color: white;
-  font-size: 14px;
-  border-top: 2px solid #0056b3;
-  margin-top: 40px;
+    background-color: #007bff;
+    /* Matching header color */
+    padding: 15px 0;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    border-top: 2px solid #0056b3;
+    margin-top: 40px;
 }
 
 footer p {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 
 /* footer css end */
+
+
+/* Home page */
+
+.button-link {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button-link:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.button-link:active {
+    background-color: #003d80;
+    transform: translateY(0);
+}
+
+
+/* Home Page */
