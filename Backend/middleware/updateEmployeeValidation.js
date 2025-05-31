@@ -4,7 +4,9 @@ const employeeValidSchema = Joi.object({
     name: Joi.string().min(3).max(20),
     mobile: Joi.string().pattern(/^[0-9]{10}$/),
     designation: Joi.string().valid('HR', 'Manager', 'Sales'),
-    course: Joi.string().valid('BCA', 'MCA', 'BBA', 'MBA', 'BA', 'MA'),
+    course: Joi.array().items(
+        Joi.string().valid('BCA', 'MCA', 'BBA', 'MBA', 'BA', 'MA')
+    ).min(1).required(),
     image: Joi.string().optional()
 });
 

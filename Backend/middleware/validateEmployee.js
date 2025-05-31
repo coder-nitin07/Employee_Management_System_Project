@@ -6,7 +6,9 @@ const userValidSchema = Joi.object({
     mobile: Joi.string().pattern(/^[0-9]{10}$/).required(),
     designation: Joi.string().valid('HR', 'Manager', 'Sales').required(),
     gender: Joi.string().valid('male', 'female').required(),
-    course: Joi.string().valid('BCA', 'MCA', 'BBA', 'MBA', 'BA', 'MA').required(),
+    course: Joi.array().items(
+        Joi.string().valid('BCA', 'MCA', 'BBA', 'MBA', 'BA', 'MA')
+    ).min(1).required(),
     image: Joi.string().optional()
 });
 
