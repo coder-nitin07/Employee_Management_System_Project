@@ -20,7 +20,7 @@ app.get('/employees', (req, res) => {
     res.render('employees/list', { title: 'Employee List' });
 });
 
-app.get('/add', (req, res) => {
+app.get('/employees/add', (req, res) => {
     res.render('employees/add', { title: 'Add Employee' });
 });
 
