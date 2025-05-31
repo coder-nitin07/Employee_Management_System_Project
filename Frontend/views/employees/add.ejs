@@ -46,17 +46,22 @@
         <label>Course(s) *</label><br/>
 
         <label for="bca">BCA</label>
-        <input type="checkbox" id="bca" name="course" value="BCA" />
+        <input type="checkbox" id="bca" name="course[]"  value="BCA" />
+        
         <label for="mca">MCA</label>
-        <input type="checkbox" id="mca" name="course" value="MCA" />
+        <input type="checkbox" id="mca" name="course[]"  value="MCA" />
+        
         <label for="bba">BBA</label>
-        <input type="checkbox" id="bba" name="course" value="BBA" />
+        <input type="checkbox" id="bba" name="course[]"  value="BBA" />
+        
         <label for="mba">MBA</label>
-        <input type="checkbox" id="mba" name="course" value="MBA" />
+        <input type="checkbox" id="mba" name="course[]"  value="MBA" />
+        
         <label for="ba">BBA</label>
-        <input type="checkbox" id="ba" name="course" value="BA" />
+        <input type="checkbox" id="ba" name="course[]"  value="BA" />
+        
         <label for="ma">MA</label>
-        <input type="checkbox" id="ma" name="course" value="MA" />
+        <input type="checkbox" id="ma" name="course[]"  value="MA" />
         <br /><br />
 
         <label for="image">Portfolio Image *</label>
@@ -76,25 +81,25 @@
             const formData = new FormData(form);
             
             $.ajax({
-        url: 'https://employee-management-system-project-yaf9.onrender.com/api/createEmployee',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-        },
-        success: function (response) {
-            alert('Employee added successfully!');
-          window.location.href = '/employees'; // redirect to list page
-        },
-        error: function (xhr) {
-          const errorMessage = xhr.responseJSON?.message || 'Failed to add employee';
-          alert(errorMessage);
-        }
+                url: 'https://employee-management-system-project-yaf9.onrender.com/api/createEmployee',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function (response) {
+                    alert('Employee added successfully!');
+                    window.location.href = '/employees'; // redirect to list page
+                },
+                error: function (xhr) {
+                    const errorMessage = xhr.responseJSON?.message || 'Failed to add employee';
+                    alert(errorMessage);
+                }
+        });
     });
-});
-});
+    });
 </script>
 
 <script src="/js/validation.js"></script>

@@ -28,19 +28,32 @@
         <br /><br />
 
         <label>Gender *</label><br />
-        <input type="radio" id="male" name="gender" value="male" required />
         <label for="male">Male</label>
-        <input type="radio" id="female" name="gender" value="female" required />
+        <input type="radio" id="male" name="gender" value="male" required />
         <label for="female">Female</label>
+        <input type="radio" id="female" name="gender" value="female" required />
         <br /><br />
 
-       <label>Course *</label><br />
-        <input type="radio" id="mca" name="course" value="MCA" required />
-        <label for="mca">MCA</label>
-        <input type="radio" id="bca" name="course" value="BCA" required />
+       
+        <label>Course *</label><br />
+
         <label for="bca">BCA</label>
-        <input type="radio" id="bsc" name="course" value="BSC" required />
-        <label for="bsc">BSC</label>
+        <input type="checkbox" id="bca" name="course[]"  value="BCA" />
+
+        <label for="mca">MCA</label>
+        <input type="checkbox" id="mca" name="course[]"  value="MCA" />
+
+        <label for="bba">BBA</label>
+        <input type="checkbox" id="bba" name="course[]"  value="BBA" />
+
+        <label for="mba">MBA</label>
+        <input type="checkbox" id="mba" name="course[]"  value="MBA" />
+
+        <label for="ba">BBA</label>
+        <input type="checkbox" id="ba" name="course[]"  value="BA" />
+        
+        <label for="ma">MA</label>
+        <input type="checkbox" id="ma" name="course[]"  value="MA" />
         <br /><br />
 
         <label for="image">Portfolio Image (upload to change)</label><br />
