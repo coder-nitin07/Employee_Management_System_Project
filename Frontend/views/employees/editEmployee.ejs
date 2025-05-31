@@ -51,7 +51,7 @@
 
         <label for="ba">BBA</label>
         <input type="checkbox" id="ba" name="course[]"  value="BA" />
-        
+
         <label for="ma">MA</label>
         <input type="checkbox" id="ma" name="course[]"  value="MA" />
         <br /><br />
@@ -94,7 +94,7 @@
                 $('input[name="gender"][value="' + emp.gender + '"]').prop('checked', true);
                 // For course checkbox, check matching boxes
                 const courses = Array.isArray(emp.course) ? emp.course : [emp.course];
-                $('input[name="course"]').each(function() {
+                $('input[name="course[]"]').each(function() {
                     if (courses.includes($(this).val())) {
                         $(this).prop('checked', true);
                     }

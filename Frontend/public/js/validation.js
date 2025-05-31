@@ -38,7 +38,7 @@ $(document).ready(function(){
             isValid = false;
         }
 
-        if(courses.length === 0){
+        if(course.length === 0){
             errorMsg += 'Select at least one course.\n';
             isValid = false;
         }
