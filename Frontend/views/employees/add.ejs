@@ -4,7 +4,7 @@
 <div style="width: 400px; margin: 40px auto;">
     <h2>Add New Employee</h2>
 
-    <form action="http://localhost:4000/api/createEmployee" method="POST" enctype="multipart/form-data" id="addEmployeeForm">
+    <form action="https://employee-management-system-project-yaf9.onrender.com/api/createEmployee" method="POST" enctype="multipart/form-data" id="addEmployeeForm">
         <label for="name">Name *</label>
         <br />
 
@@ -68,7 +68,7 @@
             const formData = new FormData(form);
             
             $.ajax({
-        url: 'http://localhost:4000/api/createEmployee',
+        url: 'https://employee-management-system-project-yaf9.onrender.com/api/createEmployee',
         type: 'POST',
         data: formData,
         contentType: false,

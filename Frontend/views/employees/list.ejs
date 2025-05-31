@@ -60,7 +60,7 @@ $(document).ready(function() {
     $('#employeesBody').empty();
 
     $.ajax({
-      url: `http://localhost:4000/api/getAllEmployee`,
+      url: `https://employee-management-system-project-yaf9.onrender.com/api/getAllEmployee`,
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -149,7 +149,7 @@ $(document).ready(function() {
     const id = $(this).data('id');
     if (confirm('Are you sure you want to delete this employee?')) {
       $.ajax({
-        url: `http://localhost:4000/api/deleteEmployee/${id}`,
+        url: `https://employee-management-system-project-yaf9.onrender.com/api/deleteEmployee/${id}`,
         type: 'DELETE',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token')

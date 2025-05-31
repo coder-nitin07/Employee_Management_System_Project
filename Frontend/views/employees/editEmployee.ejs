@@ -65,7 +65,7 @@
 
         // Fetch existing employee data
         $.ajax({
-            url: `http://localhost:4000/api/getEmployee/${employeeId}`,
+            url: `https://employee-management-system-project-yaf9.onrender.com/api/getEmployee/${employeeId}`,
             type: 'GET',
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -107,7 +107,7 @@
             const formData = new FormData(form);
 
             $.ajax({
-                url: `http://localhost:4000/api/updateEmployee/${employeeId}`,
+                url: `https://employee-management-system-project-yaf9.onrender.com/api/updateEmployee/${employeeId}`,
                 type: 'PUT',
                 data: formData,
                 contentType: false,
