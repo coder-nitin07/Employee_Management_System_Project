@@ -6,18 +6,17 @@
     <form id="editEmployeeForm" enctype="multipart/form-data">
         <input type="hidden" id="employeeId" name="id" />
 
+        <!-- Name -->
         <label for="name">Name *</label><br />
         <input type="text" id="name" name="name" required />
         <br /><br />
 
-        <label for="email">Email *</label><br />
-        <input type="email" id="email" name="email" required />
-        <br /><br />
-
+        <!-- Mobile Number -->
         <label for="mobile">Mobile *</label><br />
         <input type="text" id="mobile" name="mobile" maxlength="10" required />
         <br /><br />
 
+        <!-- Designation -->
         <label for="designation">Designation *</label><br />
         <select id="designation" name="designation" required>
             <option value="">Select Designation</option>
@@ -26,15 +25,8 @@
             <option value="Sales">Sales</option>
         </select>
         <br /><br />
-
-        <label>Gender *</label><br />
-        <label for="male">Male</label>
-        <input type="radio" id="male" name="gender" value="male" required />
-        <label for="female">Female</label>
-        <input type="radio" id="female" name="gender" value="female" required />
-        <br /><br />
-
        
+        <!-- Course -->
         <label>Course *</label><br />
 
         <label for="bca">BCA</label>
@@ -49,7 +41,7 @@
         <label for="mba">MBA</label>
         <input type="checkbox" id="mba" name="course[]"  value="MBA" />
 
-        <label for="ba">BBA</label>
+        <label for="ba">BA</label>
         <input type="checkbox" id="ba" name="course[]"  value="BA" />
 
         <label for="ma">MA</label>
@@ -60,6 +52,7 @@
         <input type="file" id="image" name="image" accept="image/*" />
         <br /><br />
 
+        <!-- Submit Button -->
         <button type="submit">Update Employee</button>
     </form>
 </div>
@@ -88,10 +81,8 @@
 
                 $('#employeeId').val(emp._id);
                 $('#name').val(emp.name);
-                $('#email').val(emp.email);
                 $('#mobile').val(emp.mobile);
                 $('#designation').val(emp.designation);
-                $('input[name="gender"][value="' + emp.gender + '"]').prop('checked', true);
                 // For course checkbox, check matching boxes
                 const courses = Array.isArray(emp.course) ? emp.course : [emp.course];
                 $('input[name="course[]"]').each(function() {
