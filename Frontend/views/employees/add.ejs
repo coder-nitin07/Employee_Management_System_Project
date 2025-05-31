@@ -72,36 +72,6 @@
     </form>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $('#addEmployeeForm').submit(function (e) {
-            e.preventDefault(); // prevent default form submit
-            
-            const form = $('#addEmployeeForm')[0];
-            const formData = new FormData(form);
-            
-            $.ajax({
-                url: 'https://employee-management-system-project-yaf9.onrender.com/api/createEmployee',
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('token')
-                },
-                success: function (response) {
-                    alert('Employee added successfully!');
-                    window.location.href = '/employees'; // redirect to list page
-                },
-                error: function (xhr) {
-                    const errorMessage = xhr.responseJSON?.message || 'Failed to add employee';
-                    alert(errorMessage);
-                }
-        });
-    });
-    });
-</script>
-
 <script src="/js/validation.js"></script>
 
 <%- include('../partials/footer') %>
